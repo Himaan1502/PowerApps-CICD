@@ -1,0 +1,46 @@
+name: UAT CI Pipeline (Export & Branch)
+
+on:
+  workflow_dispatch:
+    inputs:
+      solution-name:
+        description: 'Solution name to export'
+        required: false
+        type: string
+
+permissions:
+  contents: write  # Required for branch-solution action to push branches
+
+jobs:
+  export-solution:
+    uses: Himaan1502/PowerApps-Template/.github/workflows/power-apps-ci-template.yml@main
+    with:
+      solution-name: ${{ github.event.inputs.solution-name }}
+      environment-url: 'https://org39703227.crm8.dynamics.com/'
+      solution-output-folder: 'out/solutions/uat'
+      solution-type: 'Unmanaged'
+    secrets:
+      azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+  notify-export:
+    needs: export-solution
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Export Status
+        run: |
+          if [ "${{ needs.export-solution.result }}" == "success" ]; then
+            echo "Solution export completed successfully"
+            echo "Solution: ${{ github.event.inputs.solution-name }}"
+            echo ""
+            echo "Next Steps:"
+            echo "1. Go to your repository's Pull Requests"
+            echo "2. Find the PR for the newly created branch"
+            echo "3. Review the changes in the solution files"
+            echo "4. Merge the PR to trigger the CD pipeline"
+          else
+            echo "Solution export failed"
+            echo "Please check the workflow logs for details"
+          fi
