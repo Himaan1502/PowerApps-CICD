@@ -1,0 +1,56 @@
+name: Power Apps UAT Deployment Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment-type:
+        description: 'Deployment type for UAT'
+        required: true
+        type: choice
+        options:
+          - export-build-only
+          - deploy-to-uat
+          - full-pipeline
+        default: 'full-pipeline'
+      solution-name:
+        description: 'Solution name to deploy (optional override)'
+        required: false
+        type: string
+  push:
+    branches:
+      - uat
+      - release/*
+    paths:
+      - 'solutions/**'
+
+jobs:
+  call-power-apps-uat-cicd:
+    uses: Himaan1502/PowerApps-Template/.github/workflows/power-apps-cicd-template.yml@main
+    with:
+      solution-name: ${{ github.event.inputs.solution-name || 'YourSolutionName' }}
+      environment-url: 'https://yourdev.crm.dynamics.com'
+      target-environment-url: 'https://youruat.crm.dynamics.com'
+      solution-output-folder: 'out/solutions/uat'
+      solution-type: 'Unmanaged'
+      run-build: ${{ github.event.inputs.deployment-type != 'deploy-to-uat' || github.event_name == 'push' }}
+      run-deploy: ${{ github.event.inputs.deployment-type == 'deploy-to-uat' || github.event.inputs.deployment-type == 'full-pipeline' }}
+    secrets:
+      azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+  notify-deployment:
+    needs: call-power-apps-uat-cicd
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Deployment Status
+        run: |
+          if [ "${{ needs.call-power-apps-uat-cicd.result }}" == "success" ]; then
+            echo "UAT Deployment completed successfully"
+            echo "Environment: https://youruat.crm.dynamics.com"
+            echo "Solution: ${{ github.event.inputs.solution-name || 'YourSolutionName' }}"
+          else
+            echo "UAT Deployment failed"
+            echo "Please check the workflow logs for details"
+          fi
