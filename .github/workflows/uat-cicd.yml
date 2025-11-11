@@ -23,6 +23,9 @@ on:
     paths:
       - 'solutions/**'
 
+permissions:
+  contents: write        # Required for pushing branches and commits    
+
 jobs:
   call-power-apps-uat-cicd:
     uses: Himaan1502/PowerApps-Template/.github/workflows/power-apps-cicd-template.yml@main
