@@ -28,8 +28,8 @@ jobs:
     uses: Himaan1502/PowerApps-Template/.github/workflows/power-apps-cicd-template.yml@main
     with:
       solution-name: ${{ github.event.inputs.solution-name || 'YourSolutionName' }}
-      environment-url: 'https://yourdev.crm.dynamics.com'
-      target-environment-url: 'https://youruat.crm.dynamics.com'
+      environment-url: 'https://org39703227.crm8.dynamics.com/'
+      target-environment-url: 'https://orgc4355614.crm8.dynamics.com/'
       solution-output-folder: 'out/solutions/uat'
       solution-type: 'Unmanaged'
       run-build: ${{ github.event.inputs.deployment-type != 'deploy-to-uat' || github.event_name == 'push' }}
