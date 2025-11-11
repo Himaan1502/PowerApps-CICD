@@ -7,16 +7,6 @@ on:
         description: 'Solution name to deploy'
         required: false
         type: string
-      skip-build:
-        description: 'Skip building managed solution'
-        required: false
-        type: boolean
-        default: false
-      skip-deploy:
-        description: 'Skip deployment to UAT'
-        required: false
-        type: boolean
-        default: false
   push:
     branches:
       - main
@@ -34,8 +24,8 @@ jobs:
     with:
       solution-name: ${{ github.event.inputs.solution-name || 'GitHubActionsDevOpsDemo' }}
       target-environment-url: 'https://orgc4355614.crm8.dynamics.com/'
-      run-build: ${{ !github.event.inputs.skip-build }}
-      run-deploy: ${{ !github.event.inputs.skip-deploy }}
+      run-build: true
+      run-deploy: true
     secrets:
       azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
