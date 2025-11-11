@@ -1,0 +1,60 @@
+name: UAT CD Pipeline (Build & Deploy)
+
+on:
+  workflow_dispatch:
+    inputs:
+      solution-name:
+        description: 'Solution name to deploy'
+        required: false
+        type: string
+      skip-build:
+        description: 'Skip building managed solution'
+        required: false
+        type: boolean
+        default: false
+      skip-deploy:
+        description: 'Skip deployment to UAT'
+        required: false
+        type: boolean
+        default: false
+  push:
+    branches:
+      - main
+      - uat
+      - release/*
+    paths:
+      - 'solutions/**'
+
+permissions:
+  contents: read  # Read-only permissions for CD pipeline
+
+jobs:
+  build-and-deploy:
+    uses: Himaan1502/PowerApps-Template/.github/workflows/power-apps-cd-template.yml@main
+    with:
+      solution-name: ${{ github.event.inputs.solution-name || 'GitHubActionsDevOpsDemo' }}
+      target-environment-url: 'https://orgc4355614.crm8.dynamics.com/'
+      run-build: ${{ !github.event.inputs.skip-build }}
+      run-deploy: ${{ !github.event.inputs.skip-deploy }}
+    secrets:
+      azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+  notify-deployment:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Deployment Status
+        run: |
+          if [ "${{ needs.build-and-deploy.result }}" == "success" ]; then
+            echo "UAT Deployment completed successfully"
+            echo "Environment: https://orgc4355614.crm8.dynamics.com/"
+            echo "Solution: ${{ github.event.inputs.solution-name || 'GitHubActionsDevOpsDemo' }}"
+            echo ""
+            echo "The solution has been deployed to UAT environment"
+          else
+            echo "UAT Deployment failed"
+            echo "Please check the workflow logs for details"
+          fi
