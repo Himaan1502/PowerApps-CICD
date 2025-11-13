@@ -21,12 +21,12 @@
   "ConnectionReferences": [
     {
       "LogicalName": "crf6c_SharePointConnection",
-      "ConnectionId": "",
+      "ConnectionId": "e3c03c5dde1842abaafd5b2dd6601d12",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
     },
     {
       "LogicalName": "crf6c_DataverseConnection",
-      "ConnectionId": "",
+      "ConnectionId": "3118ca28220045168dbb1dd110c2716f",
       "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
     }
   ]
