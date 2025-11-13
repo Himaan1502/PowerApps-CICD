@@ -15,7 +15,7 @@
     },
     {
       "SchemaName": "crf6c_EnableDebugMode",
-      "Value": "true"
+      "Value": "No"
     }
   ],
   "ConnectionReferences": [
