@@ -24,6 +24,7 @@ jobs:
     with:
       solution-name: ${{ github.event.inputs.solution-name || 'GitHubActionsDevOpsDemo' }}
       target-environment-url: 'https://orgc4355614.crm8.dynamics.com/'
+      target-environment: 'UAT'
       run-build: true
       run-deploy: true
     secrets:
@@ -40,11 +41,23 @@ jobs:
         run: |
           if [ "${{ needs.build-and-deploy.result }}" == "success" ]; then
             echo "UAT Deployment completed successfully"
-            echo "Environment: https://orgc4355614.crm8.dynamics.com/"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "Environment: UAT"
+            echo "URL: https://orgc4355614.crm8.dynamics.com/"
             echo "Solution: ${{ github.event.inputs.solution-name || 'GitHubActionsDevOpsDemo' }}"
+            echo "Deployment Settings: settings/DeploymentSettings-UAT.json"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             echo ""
-            echo "The solution has been deployed to UAT environment"
+            echo "The solution has been deployed to UAT environment with:"
+            echo "  - Environment variables configured"
+            echo "  - Connection references updated"
           else
             echo "UAT Deployment failed"
             echo "Please check the workflow logs for details"
+            echo ""
+            echo "Common issues to check:"
+            echo "  - Deployment settings file exists at settings/DeploymentSettings-UAT.json"
+            echo "  - Connection IDs are correct"
+            echo "  - Connections are shared with service principal"
+            echo "  - Environment variables schema names match"
           fi
