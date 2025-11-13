@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "crf6c_APIEndpoint",
+      "Value": "https://uat-api.example.com/v1"
+    },
+    {
+      "SchemaName": "crf6c_APIKey",
+      "Value": "uat-api-key-12345"
+    },
+    {
+      "SchemaName": "crf6c_MaxRetryAttempts",
+      "Value": "3"
+    },
+    {
+      "SchemaName": "crf6c_EnableDebugMode",
+      "Value": "true"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "crf6c_SharePointConnection",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+    },
+    {
+      "LogicalName": "crf6c_DataverseConnection",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    }
+  ]
+}
