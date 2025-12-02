@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.25104.144" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25104.144" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25104.00144">
+<ImportExportXml version="9.2.25112.150" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25112.150" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25112.00150">
   <SolutionManifest>
     <UniqueName>GitHubActionsDevOpsDemo</UniqueName>
     <LocalizedNames>
@@ -7,7 +7,7 @@
     </LocalizedNames>
     <Descriptions />
     <Version>1.0.0.0</Version>
-    <Managed>0</Managed>
+    <Managed>1</Managed>
     <Publisher>
       <UniqueName>Cr04f53</UniqueName>
       <LocalizedNames>
@@ -81,15 +81,6 @@
       <RootComponent type="1" schemaName="account" behavior="2" />
       <RootComponent type="1" schemaName="actioncard" behavior="2" />
     </RootComponents>
-    <MissingDependencies>
-      <MissingDependency>
-        <Required type="1" schemaName="account" displayName="Account" parentSchemaName="" solution="System (5.0)" />
-        <Dependent type="1" schemaName="account" displayName="Account" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="actioncard" displayName="ActionCard" parentSchemaName="" solution="System (5.0)" />
-        <Dependent type="1" schemaName="actioncard" displayName="ActionCard" />
-      </MissingDependency>
-    </MissingDependencies>
+    <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>

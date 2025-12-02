@@ -18,7 +18,7 @@ jobs:
       solution-name: ${{ github.event.inputs.solution-name }}
       environment-url: 'https://org39703227.crm8.dynamics.com/'
       solution-output-folder: 'out/solutions/uat'
-      solution-type: 'Unmanaged'
+      solution-type: 'Managed'
     secrets:
       azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
